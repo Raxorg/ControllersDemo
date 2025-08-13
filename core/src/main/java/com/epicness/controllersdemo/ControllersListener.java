@@ -1,13 +1,12 @@
 package com.epicness.controllersdemo;
 
-import static com.epicness.controllersdemo.Constants.AXIS_LEFT_X;
-import static com.epicness.controllersdemo.Constants.AXIS_LEFT_Y;
 import static com.epicness.controllersdemo.Constants.MOVE_SPEED;
 import static com.epicness.controllersdemo.Constants.SHAPE_SIZE;
 import static com.epicness.controllersdemo.Constants.WORLD_HEIGHT;
 import static com.epicness.controllersdemo.Constants.WORLD_WIDTH;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
@@ -86,9 +85,13 @@ public class ControllersListener implements ControllerListener {
         if (activeController == null) return;
 
         // --- Axis Input for Movement ---
-        float xAxis = activeController.getAxis(AXIS_LEFT_X);
-        float yAxis = activeController.getAxis(AXIS_LEFT_Y); // Note: Y axis might be inverted (-1 is up)
+        float xAxis = activeController.getAxis(activeController.getMapping().axisLeftX);
+        float yAxis = activeController.getAxis(activeController.getMapping().axisLeftY); // Note: Y axis might be inverted (-1 is up)
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            System.out.println(xAxis);
+            System.out.println(yAxis);
+        }
         // Apply a deadzone to avoid drift
         float deadzone = 0.2f;
         if (Math.abs(xAxis) < deadzone) xAxis = 0;

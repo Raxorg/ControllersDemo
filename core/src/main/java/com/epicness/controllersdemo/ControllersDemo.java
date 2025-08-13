@@ -58,7 +58,7 @@ public class ControllersDemo extends ApplicationAdapter {
         Gdx.app.log("App", "Disposing resources...");
         shapeRenderer.dispose();
         // --- IMPORTANT: Remove the listener ---
-        Controllers.removeListener(controllersListener);
+        Controllers.clearListeners();
         Gdx.app.log("Controller", "Controller Listener removed.");
     }
 }
