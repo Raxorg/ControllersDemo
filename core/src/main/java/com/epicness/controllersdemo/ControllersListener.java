@@ -2,14 +2,13 @@ package com.epicness.controllersdemo;
 
 import static com.epicness.controllersdemo.Constants.MOVE_SPEED;
 import static com.epicness.controllersdemo.Constants.SHAPE_SIZE;
-import static com.epicness.controllersdemo.Constants.WORLD_HEIGHT;
-import static com.epicness.controllersdemo.Constants.WORLD_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 public class ControllersListener implements ControllerListener {
@@ -17,6 +16,7 @@ public class ControllersListener implements ControllerListener {
     // --- Game State ---
     private Controller activeController;
     private final Vector2 shapePosition;
+    private final int worldWidth, worldHeight;
 
     public ControllersListener(Vector2 shapePosition) {
         // Check if any controllers are already connected at startup
@@ -33,6 +33,8 @@ public class ControllersListener implements ControllerListener {
             Gdx.app.log("Controller", "No controllers detected at startup.");
         }
         this.shapePosition = shapePosition;
+        worldWidth = Gdx.graphics.getWidth();
+        worldHeight = Gdx.graphics.getHeight();
     }
 
     @Override
@@ -104,9 +106,7 @@ public class ControllersListener implements ControllerListener {
 
         // --- Boundary Checks ---
         // Keep shape within world bounds
-        if (shapePosition.x < 0) shapePosition.x = 0;
-        if (shapePosition.x + SHAPE_SIZE > WORLD_WIDTH) shapePosition.x = WORLD_WIDTH - SHAPE_SIZE;
-        if (shapePosition.y < 0) shapePosition.y = 0;
-        if (shapePosition.y + SHAPE_SIZE > WORLD_HEIGHT) shapePosition.y = WORLD_HEIGHT - SHAPE_SIZE;
+        shapePosition.x = MathUtils.clamp(shapePosition.x, 0f, worldWidth - SHAPE_SIZE);
+        shapePosition.y = MathUtils.clamp(shapePosition.y, 0f, worldHeight - SHAPE_SIZE);
     }
 }
