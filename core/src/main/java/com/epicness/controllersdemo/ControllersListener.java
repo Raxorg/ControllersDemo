@@ -79,7 +79,8 @@ public class ControllersListener implements ControllerListener {
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
         // We handle axis movement directly in render(), but you could log it here too
-        // Gdx.app.log("ControllerInput", controller.getName() + " | Axis Moved: " + axisCode + " | Value: " + value);
+        if (Math.abs(value) < 0.2f) return false;
+        Gdx.app.log("ControllerInput", controller.getName() + " | Axis Moved: " + axisCode + " | Value: " + value);
         return false;
     }
 
